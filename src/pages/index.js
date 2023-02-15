@@ -1,176 +1,342 @@
-import * as React from "react"
+import React from "react"
+import { graphql, Link, StaticQuery } from "gatsby"
+import Layout from "../components/Layout"
+//import "bootstrap/dist/css/bootstrap.css";
+import "react-bootstrap" ;
+import { useState, useEffect } from "react";
+import SolutionSlider from "../components/SolutionSlider";
+//import Accordion from "../components/Accordion";
+//import Carousel from "../components/Carousel";
+import ArrowRightIcon from "../components/ArrowRightIcon";
+import MeetSlider from "../components/MeetSlider";
 
-const pageStyles = {
-  color: "#232129",
-  padding: 96,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
-const headingAccentStyles = {
-  color: "#663399",
-}
-const paragraphStyles = {
-  marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
-const listStyles = {
-  marginBottom: 96,
-  paddingLeft: 0,
-}
-const listItemStyles = {
-  fontWeight: 300,
-  fontSize: 24,
-  maxWidth: 560,
-  marginBottom: 30,
-}
+import WOW from 'wowjs';
+import "wowjs/css/libs/animate.css"
+import 'animate.css';
+import Calendar from "../components/Calendar";
+import Adminlogo from "../components/Adminlogo";
+import NewSlider from "../components/NewSlider";
 
-const linkStyle = {
-  color: "#8954A8",
-  fontWeight: "bold",
-  fontSize: 16,
-  verticalAlign: "5%",
-}
 
-const docLinkStyle = {
-  ...linkStyle,
-  listStyleType: "none",
-  marginBottom: 24,
-}
+const IndexPage = ({ data }) => {
+  useEffect(() => {
+    const wow = new WOW.WOW({
+      boxClass: 'wow', // The class name for each section container
+      animateClass: 'animate__animated', // The class name for the animated element
+      offset: 0, // The distance in pixels from the element before triggering the animation
+      mobile: false, // Enable or disable animation on mobile devices
+      live: true, // Enable or disable the live mode (the animation will be triggered when the element appears in the viewport)
+    });
+    wow.init();
+  }, []);
 
-const descriptionStyle = {
-  color: "#232129",
-  fontSize: 14,
-  marginTop: 10,
-  marginBottom: 0,
-  lineHeight: 1.25,
-}
-
-const docLink = {
-  text: "Documentation",
-  url: "https://www.gatsbyjs.com/docs/",
-  color: "#8954A8",
-}
-
-const badgeStyle = {
-  color: "#fff",
-  backgroundColor: "#088413",
-  border: "1px solid #088413",
-  fontSize: 11,
-  fontWeight: "bold",
-  letterSpacing: 1,
-  borderRadius: 4,
-  padding: "4px 6px",
-  display: "inline-block",
-  position: "relative",
-  top: -2,
-  marginLeft: 10,
-  lineHeight: 1,
-}
-
-const links = [
-  {
-    text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial/",
-    description:
-      "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-    color: "#E95800",
-  },
-  {
-    text: "How to Guides",
-    url: "https://www.gatsbyjs.com/docs/how-to/",
-    description:
-      "Practical step-by-step guides to help you achieve a specific goal. Most useful when you're trying to get something done.",
-    color: "#1099A8",
-  },
-  {
-    text: "Reference Guides",
-    url: "https://www.gatsbyjs.com/docs/reference/",
-    description:
-      "Nitty-gritty technical descriptions of how Gatsby works. Most useful when you need detailed information about Gatsby's APIs.",
-    color: "#BC027F",
-  },
-  {
-    text: "Conceptual Guides",
-    url: "https://www.gatsbyjs.com/docs/conceptual/",
-    description:
-      "Big-picture explanations of higher-level Gatsby concepts. Most useful for building understanding of a particular topic.",
-    color: "#0D96F2",
-  },
-  {
-    text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins",
-    description:
-      "Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-    color: "#8EB814",
-  },
-  {
-    text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud",
-    badge: true,
-    description:
-      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
-    color: "#663399",
-  },
-]
-
-const IndexPage = () => {
+  // const [visible, setVisible] = useState(false);
+  // const [visibles, setVisibles] = useState(false);
+  
+  // useEffect(() => {
+  //   const element = document.querySelector(".bner_sec_text_d");
+  //   element.addEventListener("animationend", () => {
+  //     setVisible(true);
+  
+  //     setTimeout(() => {
+  //       const elements = document.querySelector(".bnersec_txt2");
+  //       elements.addEventListener("animationend", () => {
+  //         setVisibles(true);
+  //       });
+  //     }, 500); // delay the second animation by 500ms
+  //   });
+  
+  //   return () => {
+  //     element.removeEventListener("animationend", () => {
+  //       setVisible(true);
+  //     });
+  //   };
+  // }, []);
   return (
-    <main style={pageStyles}>
-      <h1 style={headingStyles}>
-        Congratulations
-        <br />
-        <span style={headingAccentStyles}>— you just made a Gatsby site! 🎉🎉🎉</span>
-      </h1>
-      <p style={paragraphStyles}>
-        Edit <code style={codeStyles}>src/pages/index.js</code> to see this page
-        update in real-time. 😎
-      </p>
-      <ul style={listStyles}>
-        <li style={docLinkStyle}>
-          <a
-            style={linkStyle}
-            href={`${docLink.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
-          >
-            {docLink.text}
-          </a>
-        </li>
-        {links.map(link => (
-          <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
-            <span>
-              <a
-                style={linkStyle}
-                href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
-              >
-                {link.text}
-              </a>
-              {link.badge && (
-                <span style={badgeStyle} aria-label="New Badge">
-                  NEW!
-                </span>
-              )}
-              <p style={descriptionStyle}>{link.description}</p>
-            </span>
-          </li>
+    <Layout>
+      <main>
+      <StaticQuery 
+            query={graphql`
+            query {
+              wpPage(id: {eq: "cG9zdDo0MA=="}) {
+                id
+                slug
+                title
+                homeSlider {
+                  sliderHeading
+                  sliderSubheading
+                }
+                homeAboutSection {
+                  heading
+                  image {
+                    sourceUrl
+                  }
+                  shortDescription
+                }
+                homePartnerSection {
+                  partnerHeading
+                  supportersHeading                  
+                  partner {
+                    partnerImage {
+                      sourceUrl
+                    }
+                    siteUrl
+                  }
+                }
+                homeNews {
+                  newsHeading
+                  newsSubheading
+                }
+              }
+
+              allWpNews(sort: {date: ASC}, limit: 2) {
+                edges {
+                  node {
+                    id
+                    title
+                    newsSection {
+                      
+                      imageArchivePage {
+                        sourceUrl
+                      }
+                    }
+                    excerpt
+                    slug
+                    date(formatString: "DD MMMM yyyy")
+                  }
+                }
+              }
+              }
+            `}
+
+            
+
+            render={data => (
+              
+              <>
+
+              {/* <MyComponent /> */}
+
+<section class="banner_sec" style={{ backgroundImage: `url(../../bnerimg.png)` }}>
+			
+			<div class="our_banner_top">
+				<div class="container">
+					<div class="row justify-content-center">
+          <div className="wow animate__fadeInUp">
+                        <div class="col-md-12">
+                            <div class="earth_new_mio" >
+                                <img src="../../earth_wrap.png" />
+                            </div>
+                          
+                        </div>
+                        </div>
+                        <div className="wow animate__fadeInUp" >           
+						<div class="col-md-12">
+							<div class="bner_sec_text_d"  >
+              
+								<div class="bner_main_tx">
+                <div dangerouslySetInnerHTML={{ __html: data.wpPage.homeSlider.sliderHeading }} />
+                
+								</div>
+							</div>
+						</div>
+            </div>
+						<div class="col-md-12">
+							<div class="bnersec_txt2 bn_cvb">
+              <div className="wow animate__fadeInUp" data-wow-delay="1s">
+								<div class="p_txt">
+                <div dangerouslySetInnerHTML={{ __html: data.wpPage.homeSlider.sliderSubheading }} />
+								</div>
+                </div>
+							</div>
+						</div>
+                     
+					</div>
+				</div>
+			</div>
+		</section>
+
+    <section class="about_us_sec pb_100 " style={{ backgroundImage: `url(../../Banne.png)` }}>
+			<div class="container">
+				<div class="row align-items-center">
+          <div className="wow slideInLeft">
+					<div class="col-md-8 " >
+						<div class="about_sec_text fvg">
+            
+							<h1><strong>{data.wpPage.homeAboutSection.heading}</strong> us</h1>
+							<p dangerouslySetInnerHTML={{ __html: data.wpPage.homeAboutSection.shortDescription }} />
+              
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+    
+
+                {/* <section class="banner_sec" style={{ backgroundImage: `url(../../bnerimg.png)` }}>
+			
+			<div class="our_banner_top">
+				<div class="container">
+					<div class="row justify-content-center">
+                        <div class="col-md-12">
+                           
+                            <div class="our_earth_wrap">
+                                <div class="earth">
+                                   <div></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+  <div className={`bner_sec_text_d ${visibles ? "visbale1" : ""}`}>
+    <div class="bner_main_tx">
+      <div dangerouslySetInnerHTML={{ __html: data.wpPage.homeSlider.sliderHeading }} />
+    </div>
+  </div>
+</div>
+<div class="col-md-12">
+  <div className={`bnersec_txt2 ${visible ? "visbale2" : ""} bn_cvb`}>
+    <div class="p_txt">
+      <div dangerouslySetInnerHTML={{ __html: data.wpPage.homeSlider.sliderSubheading }} />
+    </div>
+  </div>
+</div>
+					</div>
+				</div>
+			</div>
+		</section> */}
+
+    {/* <section class="about_us_sec pb_100 ">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-md-6">
+						<div class="about_sec_text fvg">       
+                  
+							<h1><strong>{data.wpPage.homeAboutSection.heading}</strong> us</h1>
+							<p dangerouslySetInnerHTML={{ __html: data.wpPage.homeAboutSection.shortDescription }} />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="about_cntimg">
+							<img src={data.wpPage.homeAboutSection.image.sourceUrl} class="img-fluid vert-move" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</section> */}
+             {/* <Sslider /> */}
+             <NewSlider />
+    
+        {/* <SolutionSlider /> */}
+        
+        <MeetSlider />
+        <section class="newroom_sec2 pt  pb">
+        <div class="container">
+            <div class="row" data-aos="zoom-out-up" >
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="cret_prt_toptxt">
+                                <h1> <span class="titlecor">{data.wpPage.homeNews.newsHeading}</span></h1>
+                                <p class="font_y">{data.wpPage.homeNews.newsSubheading}</p>
+                            </div>
+                        </div>
+                    </div>
+            <div class="row">
+            {data.allWpNews.edges.map(({ node }) => (
+          <>
+                <div class="col-lg-6 col-md-6 col-sm-12 pb_25" data-aos="flip-right"
+     data-aos-duration="2000">
+                  <div className="wow flipInY" data-wow-duration="1s">
+                    <div class="newsec2_mnbox pb_25">
+                        <img src={node.newsSection.imageArchivePage.sourceUrl} class="img-fluid" alt="" />
+                        <div class="news_imgtxt">
+                        <h4 dangerouslySetInnerHTML={{ __html: node.excerpt.replace(/<p>/, "<h4>").replace(/<\/p>/, "</h4>") }} />
+                        </div>
+                       
+                    </div>
+                    <div class="news_txtbx pb_25">
+                        <div class="newtxtbx pb_20">
+                             <div class="newculbox">
+                                 <p><span><Calendar /></span>{node.date}</p>
+                             </div>
+                             <div class="newadminbx">
+                                 <p><span><Adminlogo /></span>Admin</p>
+                             </div>
+                         </div>
+                         <h4 dangerouslySetInnerHTML={{ __html: node.excerpt.replace(/<p>/, "<h4>").replace(/<\/p>/, "</h4>") }} />
+                         <Link to={node.slug} class="readmorebtn" >
+                                 Read more<span><ArrowRightIcon /></span>
+                             </Link>
+                     </div>
+                  </div>
+                </div>
+                </>
         ))}
-      </ul>
-      <img
-        alt="Gatsby G Logo"
-        src="data:image/svg+xml,%3Csvg width='24' height='24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2a10 10 0 110 20 10 10 0 010-20zm0 2c-3.73 0-6.86 2.55-7.75 6L14 19.75c3.45-.89 6-4.02 6-7.75h-5.25v1.5h3.45a6.37 6.37 0 01-3.89 4.44L6.06 9.69C7 7.31 9.3 5.63 12 5.63c2.13 0 4 1.04 5.18 2.65l1.23-1.06A7.959 7.959 0 0012 4zm-8 8a8 8 0 008 8c.04 0 .09 0-8-8z' fill='%23639'/%3E%3C/svg%3E"
-      />
+                
+            
+            </div>
+        </div>
+        </section>
+        {/* <section class="newroom_sec2 pt  pb">
+        <div class="container">
+            <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="cret_prt_toptxt">
+                                <h1> <span class="titlecor">{data.wpPage.homeNews.newsHeading}
+              </span></h1>
+                                <p class="font_y">{data.wpPage.homeNews.newsSubheading}</p>
+                            </div>
+                        </div>
+                    </div>
+            <div class="row">
+            {data.allWpNews.edges.map(({ node }) => (
+          <>
+                <div class="col-lg-6 col-md-6 col-sm-12 pb_25">
+                    <div class="newsec2_mnbox pb_25">
+                        <img src={node.newsSection.imageArchivePage.sourceUrl} class="img-fluid" alt="" />
+                        <div class="news_imgtxt">
+                          
+                            
+                            <h4 dangerouslySetInnerHTML={{ __html: node.excerpt.replace(/<p>/, "<h4>").replace(/<\/p>/, "</h4>") }} />
+
+                        </div>
+                       
+                    </div>
+                    <div class="news_txtbx pb_25">
+                        <div class="newtxtbx pb_20">
+                             <div class="newculbox">
+                                 <p><span><i class="fa-solid fa-calendar-days"></i></span>{node.date}</p>
+                             </div>
+                             <div class="newadminbx">
+                                 <p><span><i class="fa-solid fa-user"></i></span>Admin</p>
+                             </div>
+                         </div>
+                         <h4 dangerouslySetInnerHTML={{ __html: node.excerpt.replace(/<p>/, "<h4>").replace(/<\/p>/, "</h4>") }} />
+
+                         <Link to={node.slug} class="readmorebtn" >
+                                 Read more<span><ArrowRightIcon /></span>
+                             </Link>
+                     </div>
+                </div>
+                </>
+        ))}
+                
+            
+            </div>
+        </div>
+        </section> */}
+              </>
+         
+              
+            )}
+
+            />
     </main>
+    </Layout>
   )
 }
 
-export default IndexPage
 
-export const Head = () => <title>Home Page</title>
+
+export default IndexPage

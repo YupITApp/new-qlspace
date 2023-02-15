@@ -1,9 +1,21 @@
-/**
- * @type {import('gatsby').GatsbyConfig}
- */
 module.exports = {
   siteMetadata: {
-    siteUrl: `https://www.yourdomain.tld`,
+    
   },
-  plugins: [],
+  plugins: [
+    
+    {
+        resolve: `gatsby-source-wordpress`,
+        options: {
+            // Specify the URL of the WordPress source
+            url:`http://steamlinedesign.com/suchi/qlspacenew/graphql`,
+           
+            includedRoutes: [
+              '**/posts',
+              '**/tags',              
+              '**/categories'
+            ]
+        }
+    }
+  ]
 }
